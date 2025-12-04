@@ -1,1 +1,760 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jowon’s Blog | 기술과 디자인 인사이트</title>
+    <!-- Github Pages 호스팅을 위한 빌드 과정 없는 순수 정적 파일 구성 -->
+    <!-- 모든 스타일과 스크립트는 이 파일 내에 포함됩니다. -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+         * =======================================================
+         * 1. CSS Global 및 초기화 설정
+         * =======================================================
+         */
+        :root {
+            /* Light Mode Variables */
+            --color-text-primary: #1f2937;
+            --color-text-secondary: #4b5563;
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f3f4f6;
+            --color-accent: #3b82f6; /* Blue 500 */
+            --color-border: #e5e7eb;
+            --color-card-shadow: rgba(0, 0, 0, 0.05);
+        }
 
+        /* Dark Mode */
+        body.dark-mode {
+            --color-text-primary: #f3f4f6;
+            --color-text-secondary: #9ca3af;
+            --color-background-primary: #111827;
+            --color-background-secondary: #1f2937;
+            --color-accent: #60a5fa; /* Blue 400 */
+            --color-border: #374151;
+            --color-card-shadow: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--color-background-secondary);
+            color: var(--color-text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--color-text-primary);
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--color-text-primary);
+            font-weight: 700;
+            margin-bottom: 0.5em;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+
+        /*
+         * =======================================================
+         * 2. Header 및 Navigation (GNB) 스타일
+         * =======================================================
+         */
+        header {
+            background-color: var(--color-background-primary);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px var(--color-card-shadow);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        /* Global Navigation Bar (GNB) */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav button {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--color-text-secondary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        nav button.active, nav button:hover {
+            color: var(--color-accent);
+            background-color: var(--color-background-secondary);
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Mobile Menu Toggle Button (햄버거 메뉴) */
+        .menu-toggle {
+            display: none; /* Desktop에서는 숨김 */
+            font-size: 1.5rem;
+            color: var(--color-text-primary);
+            padding: 0.5rem;
+        }
+        
+        /* Dark Mode Switch */
+        .dark-mode-toggle {
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            color: var(--color-text-secondary);
+            transition: color 0.2s;
+        }
+        .dark-mode-toggle:hover {
+            color: var(--color-accent);
+        }
+
+        /*
+         * =======================================================
+         * 3. Main Content 레이아웃
+         * =======================================================
+         */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+        
+        section {
+            display: none; /* SPA: 초기에는 모두 숨김, JS로 전환 */
+            padding-bottom: 2rem;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        /*
+         * =======================================================
+         * 4. 홈 섹션 (Featured Post & Post Grid) 스타일
+         * =======================================================
+         */
+        
+        /* Featured Post (가장 최신 포스트 강조) */
+        .featured-post {
+            background-color: var(--color-background-primary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px var(--color-card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .featured-image {
+            width: 100%;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 3 / 2; /* 600x400 비율 */
+        }
+        
+        .featured-content h2 {
+            font-size: 2rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .featured-content p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+        }
+        .featured-meta {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-weight: 300;
+        }
+
+        /* Post Grid (최근 포스트 목록) */
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .post-card {
+            background-color: var(--color-background-primary);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px var(--color-card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px var(--color-card-shadow);
+        }
+
+        .post-card-image {
+            width: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .post-card-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 4 / 3;
+        }
+
+        .post-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-card-excerpt {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            flex-grow: 1; /* 내용이 짧아도 카드 높이를 맞추기 위해 */
+        }
+
+        .post-card-meta {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            font-weight: 300;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--color-border);
+        }
+
+        /*
+         * =======================================================
+         * 5. 기타 섹션 (기술, 디자인, 소개) 스타일
+         * =======================================================
+         */
+        
+        .section-content {
+            background-color: var(--color-background-primary);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px var(--color-card-shadow);
+        }
+        
+        .section-content h1 {
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-info p {
+            margin-bottom: 1rem;
+        }
+        
+        .contact-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1.5rem;
+        }
+        .contact-list li {
+            margin-bottom: 0.5rem;
+            color: var(--color-text-secondary);
+        }
+        .contact-list a {
+            font-weight: 700;
+        }
+
+        /*
+         * =======================================================
+         * 6. Footer 스타일
+         * =======================================================
+         */
+        footer {
+            background-color: var(--color-background-primary);
+            border-top: 1px solid var(--color-border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            margin: 0 0.5rem;
+            color: var(--color-text-secondary);
+            font-size: 1.2rem;
+        }
+        .social-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /*
+         * =======================================================
+         * 7. 반응형 디자인 (Media Queries) - Mobile First
+         * =======================================================
+         */
+         
+        /* Small Tablet (Min Width: 640px) */
+        @media (min-width: 640px) {
+            /* Featured Post 레이아웃 변경 */
+            .featured-post {
+                flex-direction: row;
+                align-items: center;
+                gap: 2rem;
+                padding: 2.5rem;
+            }
+            .featured-image, .featured-content {
+                flex: 1;
+                min-width: 0; /* flex item 최소 너비 설정 */
+            }
+            .featured-image img {
+                aspect-ratio: 4 / 3;
+            }
+        }
+        
+        /* Tablet/Desktop Breakpoint (Min Width: 768px) */
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none; /* 데스크톱에서는 햄버거 메뉴 숨김 */
+            }
+            
+            nav {
+                display: block !important; /* 모바일 메뉴 토글에 의해 숨겨진 것을 다시 보이게 함 */
+            }
+            
+            /* GNB는 이미 flex로 잘 정렬됨 */
+
+            .post-grid {
+                /* 768px 이상에서 3열 구조 유지 */
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .featured-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Mobile Breakpoint (Max Width: 767px) */
+        @media (max-width: 767px) {
+            /* 모바일에서 햄버거 메뉴 보이기 */
+            .menu-toggle {
+                display: block;
+            }
+            
+            /* 모바일 GNB 스타일 (세로 메뉴) */
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--color-background-primary);
+                border-top: 1px solid var(--color-border);
+                box-shadow: 0 3px 5px var(--color-card-shadow);
+                display: none; /* 기본 숨김 상태 */
+                padding: 1rem 0;
+            }
+            
+            nav.open {
+                display: block; /* JS로 열림 */
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            nav button {
+                width: 100%;
+                text-align: left;
+                padding: 1rem 1.5rem;
+                border-radius: 0;
+            }
+            nav button:hover {
+                 background-color: var(--color-background-secondary);
+            }
+            
+            /* Featured Post 모바일 레이아웃 */
+            .featured-post {
+                flex-direction: column;
+            }
+            
+            .featured-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            /* 포스트 그리드 모바일 레이아웃 (1열) */
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#" onclick="showSection('home')">Jowon's Insights</a>
+            </div>
+            
+            <div class="nav-controls">
+                <!-- GNB (Global Navigation Bar) -->
+                <nav id="gnb">
+                    <ul>
+                        <li><button data-section="home" class="active">홈</button></li>
+                        <li><button data-section="tech">기술</button></li>
+                        <li><button data-section="design">디자인</button></li>
+                        <li><button data-section="about">소개</button></li>
+                    </ul>
+                </nav>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="다크 모드 토글">
+                    <!-- Moon icon (for light mode) / Sun icon (for dark mode) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-medium"><circle cx="12" cy="12" r="4"/><path d="M12 4v1"/><path d="M12 19v1"/><path d="M5.64 5.64l.7.7"/><path d="M17.66 17.66l.7.7"/><path d="M4 12H5"/><path d="M19 12h1"/><path d="M5.64 17.66l.7-.7"/><path d="M17.66 5.64l.7-.7"/></svg>
+                </button>
+                
+                <!-- Mobile Menu Toggle Button -->
+                <button id="menuToggle" class="menu-toggle" aria-label="메뉴 열기">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ======================================================= -->
+        <!-- 1. 홈 섹션 (초기 활성화) -->
+        <!-- ======================================================= -->
+        <section id="home" class="section active">
+            <h1>최신 인사이트</h1>
+
+            <!-- Featured Post (최신 포스트 1개 강조) -->
+            <article class="featured-post">
+                <div class="featured-image">
+                    <!-- 테스트 이미지 플레이스홀더 -->
+                    <img src="https://placehold.co/600x400/3b82f6/ffffff?text=Featured+Post" alt="최신 포스트 이미지">
+                </div>
+                <div class="featured-content">
+                    <p class="featured-meta">기술 | 2025년 12월 1일</p>
+                    <h2>생성형 AI의 미래: 개발자가 준비해야 할 3가지 핵심 역량</h2>
+                    <p>
+                        최근 생성형 AI 기술의 발전 속도는 놀랍습니다. 이 글에서는 AI 시대에 개발자들이 반드시 익혀야 할 Prompt Engineering, MLOps, 그리고 윤리적 AI 설계에 대한 통찰을 제공합니다.
+                    </p>
+                    <a href="#">자세히 보기 &rarr;</a>
+                </div>
+            </article>
+
+            <h2>최근 포스트</h2>
+            <!-- Post Grid (3열 구조의 최근 포스트 목록 6개) -->
+            <div class="post-grid">
+                <!-- 포스트 카드 1 -->
+                <article class="post-card">
+                    <div class="post-card-image">
+                        <img src="https://placehold.co/400x300/f87171/ffffff?text=Tech+Post+1" alt="기술 포스트 이미지">
+                    </div>
+                    <h3>React 19, 서버 컴포넌트의 등장과 영향</h3>
+                    <div class="post-card-excerpt">프론트엔드 개발의 새로운 패러다임, React Server Components(RSC)에 대해 깊이 있게 분석합니다.</div>
+                    <p class="post-card-meta">기술 | 2025년 11월 28일</p>
+                </article>
+
+                <!-- 포스트 카드 2 -->
+                <article class="post-card">
+                    <div class="post-card-image">
+                        <img src="https://placehold.co/400x300/34d399/ffffff?text=Design+Post+1" alt="디자인 포스트 이미지">
+                    </div>
+                    <h3>미니멀리즘 디자인의 5가지 원칙</h3>
+                    <div class="post-card-excerpt">복잡함을 줄이고 핵심에 집중하는 미니멀 디자인이 사용자 경험에 미치는 긍정적인 영향.</div>
+                    <p class="post-card-meta">디자인 | 2025년 11월 25일</p>
+                </article>
+
+                <!-- 포스트 카드 3 -->
+                <article class="post-card">
+                    <div class="post-card-image">
+                        <img src="https://placehold.co/400x300/fbbd23/ffffff?text=Tech+Post+2" alt="기술 포스트 이미지">
+                    </div>
+                    <h3>Go 언어로 배우는 고성능 API 설계</h3>
+                    <div class="post-card-excerpt">Go의 동시성 모델을 활용하여 빠르고 안정적인 백엔드 API를 구축하는 실전 가이드.</div>
+                    <p class="post-card-meta">기술 | 2025년 11월 20일</p>
+                </article>
+
+                <!-- 포스트 카드 4 -->
+                <article class="post-card">
+                    <div class="post-card-image">
+                        <img src="https://placehold.co/400x300/60a5fa/ffffff?text=Design+Post+2" alt="디자인 포스트 이미지">
+                    </div>
+                    <h3>모바일 UX를 위한 Fluid Typography 전략</h3>
+                    <div class="post-card-excerpt">모든 화면 크기에서 가독성을 보장하는 유동적인 타이포그래피 구현 방법론.</div>
+                    <p class="post-card-meta">디자인 | 2025년 11월 15일</p>
+                </article>
+
+                <!-- 포스트 카드 5 -->
+                <article class="post-card">
+                    <div class="post-card-image">
+                        <img src="https://placehold.co/400x300/a78bfa/ffffff?text=Tech+Post+3" alt="기술 포스트 이미지">
+                    </div>
+                    <h3>웹 성능 최적화의 A to Z: Core Web Vitals 개선</h3>
+                    <div class="post-card-excerpt">사용자 경험을 개선하고 검색 순위를 높이는 핵심 웹 바이탈(CWV) 지표 분석 및 개선 사례.</div>
+                    <p class="post-card-meta">기술 | 2025년 11월 10일</p>
+                </article>
+                
+                <!-- 포스트 카드 6 -->
+                <article class="post-card">
+                    <div class="post-card-image">
+                        <img src="https://placehold.co/400x300/fb923c/ffffff?text=Design+Post+3" alt="디자인 포스트 이미지">
+                    </div>
+                    <h3>접근성(Accessibility)을 고려한 색상 팔레트 선택</h3>
+                    <div class="post-card-excerpt">WCAG 기준을 충족하며 시각적 매력도 높은 색상 조합 가이드.</div>
+                    <p class="post-card-meta">디자인 | 2025년 11월 5일</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- 2. 기술 섹션 -->
+        <!-- ======================================================= -->
+        <section id="tech" class="section">
+            <div class="section-content">
+                <h1>기술 (Tech)</h1>
+                <p>프론트엔드, 백엔드, DevOps, 그리고 최신 프로그래밍 언어 트렌드에 대한 깊이 있는 분석과 실전 튜토리얼을 공유합니다. AI/ML 및 클라우드 컴퓨팅에 대한 인사이트도 제공합니다.</p>
+                <p><strong>주요 관심 주제:</strong> TypeScript, React, Go, Microservices, Serverless Architecture, WebAssembly.</p>
+                <div class="post-grid" style="margin-top: 2rem;">
+                     <!-- 예시 카드: 기술 포스트 -->
+                    <article class="post-card">
+                        <div class="post-card-image">
+                            <img src="https://placehold.co/400x300/10b981/ffffff?text=Tech+Code" alt="기술 포스트 이미지">
+                        </div>
+                        <h3>Clean Code 원칙을 적용한 Node.js 개발</h3>
+                        <p class="post-card-meta">기술 | 2025년 10월 20일</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- 3. 디자인 섹션 -->
+        <!-- ======================================================= -->
+        <section id="design" class="section">
+            <div class="section-content">
+                <h1>디자인 (Design)</h1>
+                <p>사용자 경험(UX) 설계, 인터페이스(UI) 디자인, 모션 그래픽, 그리고 타이포그래피에 대한 생각을 나눕니다. 기술과 디자인의 교차점을 탐구합니다.</p>
+                <p><strong>주요 관심 주제:</strong> 반응형 디자인(RWD), 접근성(A11y), 디자인 시스템 구축, 피그마(Figma) 활용법.</p>
+                 <div class="post-grid" style="margin-top: 2rem;">
+                     <!-- 예시 카드: 디자인 포스트 -->
+                    <article class="post-card">
+                        <div class="post-card-image">
+                            <img src="https://placehold.co/400x300/ef4444/ffffff?text=Design+System" alt="디자인 포스트 이미지">
+                        </div>
+                        <h3>작은 팀을 위한 디자인 시스템 템플릿</h3>
+                        <p class="post-card-meta">디자인 | 2025년 10월 10일</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- 4. 소개 섹션 -->
+        <!-- ======================================================= -->
+        <section id="about" class="section">
+            <div class="section-content about-info">
+                <h1>소개</h1>
+                <p>안녕하세요, <strong>Jowon</strong>입니다. 저는 소프트웨어 엔지니어이자 미니멀리즘 디자인을 사랑하는 개발자입니다. 이 블로그는 제가 탐구하고 배운 기술 지식과 디자인 철학을 공유하는 공간입니다.</p>
+                <p>복잡한 것을 단순하게, 비효율적인 것을 효율적으로 만드는 것에 큰 즐거움을 느낍니다. 함께 성장하는 개발 문화를 지향하며, 여러분의 피드백과 소통을 언제나 환영합니다.</p>
+                
+                <h2>연락 및 소셜 미디어</h2>
+                <ul class="contact-list">
+                    <li><strong style="color: var(--color-text-primary);">Email:</strong> <a href="mailto:sowokim777@gmail.com">sowokim777@gmail.com</a></li>
+                    <li><strong style="color: var(--color-text-primary);">GitHub:</strong> <a href="https://github.com/sowokim777" target="_blank">github.com/sowokim777 &rarr;</a></li>
+                    <li><strong style="color: var(--color-text-primary);">LinkedIn:</strong> (옵션) [Your LinkedIn Profile]</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-nav">
+            <ul>
+                <li><button onclick="showSection('home')">홈</button></li>
+                <li><button onclick="showSection('tech')">기술</button></li>
+                <li><button onclick="showSection('design')">디자인</button></li>
+            </ul>
+        </div>
+        <div class="social-links">
+            <!-- 소셜 미디어 아이콘 (Placeholder) -->
+            <a href="https://github.com/sowokim777" target="_blank" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.5-.42-2.95-1.43-4 .7-.73.57-2.65-.65-3.8-.55-1.1-3.34-1.05-4-.22-1.3-.4-2.78-.6-4.25-.6-.28 0-1.1.14-2.1.48-1.5.35-3.1 1.2-4.25 3.5-.73 1.34-1.13 2.76-.14 4.02.5.56 1.15.93 1.83 1.1-.3.44-.7.83-1.1 1.17-.5.5-.9 1.13-1.2 1.8-.3.67-.5 1.5-.5 2.5v4"/><path d="M9 18c-3.14 1.5-4.46-1.5-4.46-1.5"/></svg>
+            </a>
+            <a href="mailto:sowokim777@gmail.com" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </a>
+        </div>
+        <p>&copy; 2025 Jowon's Blog. All rights reserved.</p>
+    </footer>
+
+    <!--
+     * =======================================================
+     * JavaScript Logic
+     * =======================================================
+     -->
+    <script>
+        // DOM 요소 정의
+        const sections = document.querySelectorAll('.section');
+        const navButtons = document.querySelectorAll('#gnb button');
+        const menuToggle = document.getElementById('menuToggle');
+        const gnb = document.getElementById('gnb');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        /**
+         * SPA 화면 전환 로직: 선택된 섹션만 표시합니다.
+         * @param {string} sectionId - 활성화할 섹션의 ID (예: 'home', 'tech')
+         */
+        function showSection(sectionId) {
+            // 모든 섹션 숨기기
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 선택된 섹션만 표시
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // 내비게이션 버튼의 활성 상태 업데이트
+            navButtons.forEach(button => {
+                button.classList.remove('active');
+                if (button.getAttribute('data-section') === sectionId) {
+                    button.classList.add('active');
+                }
+            });
+            
+            // 모바일 메뉴 닫기 (메뉴를 클릭하여 화면이 전환되면)
+            if (gnb.classList.contains('open')) {
+                gnb.classList.remove('open');
+                menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+            }
+        }
+
+        /**
+         * 모바일 메뉴 토글 로직
+         */
+        menuToggle.addEventListener('click', () => {
+            const isOpen = gnb.classList.toggle('open');
+            // 아이콘 변경: 열렸을 때는 X, 닫혔을 때는 햄버거
+            if (isOpen) {
+                menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+            } else {
+                menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+            }
+        });
+
+        /**
+         * 다크 모드 토글 로직
+         */
+        function initializeDarkMode() {
+            // 로컬 스토리지 또는 시스템 설정을 확인하여 초기 모드 설정
+            const storedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            let initialMode = 'light-mode';
+            if (storedTheme === 'dark-mode' || (!storedTheme && prefersDark)) {
+                initialMode = 'dark-mode';
+            }
+            body.classList.remove('light-mode', 'dark-mode');
+            body.classList.add(initialMode);
+            updateDarkModeIcon(initialMode === 'dark-mode');
+        }
+
+        function updateDarkModeIcon(isDarkMode) {
+            // 다크 모드일 때: 해 아이콘 (Sun), 라이트 모드일 때: 달 아이콘 (Moon)
+            darkModeToggle.innerHTML = isDarkMode
+                ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-medium"><circle cx="12" cy="12" r="4"/><path d="M12 4v1"/><path d="M12 19v1"/><path d="M5.64 5.64l.7.7"/><path d="M17.66 17.66l.7.7"/><path d="M4 12H5"/><path d="M19 12h1"/><path d="M5.64 17.66l.7-.7"/><path d="M17.66 5.64l.7-.7"/></svg>'
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            const isDarkMode = body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode', !isDarkMode);
+            localStorage.setItem('theme', isDarkMode ? 'dark-mode' : 'light-mode');
+            updateDarkModeIcon(isDarkMode);
+        });
+        
+        // 초기화
+        window.addEventListener('load', () => {
+            initializeDarkMode();
+            
+            // 내비게이션 버튼에 이벤트 리스너 추가 (SPA 로직 실행)
+            navButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const sectionId = e.target.getAttribute('data-section');
+                    if (sectionId) {
+                        showSection(sectionId);
+                        // URL 해시 업데이트 (선택 사항이지만 SPA에서 유용)
+                        window.history.pushState(null, '', `#${sectionId}`);
+                    }
+                });
+            });
+            
+            // URL 해시를 확인하여 초기 화면 설정
+            const initialSection = window.location.hash.substring(1) || 'home';
+            showSection(initialSection);
+        });
+
+    </script>
+</body>
+</html>
