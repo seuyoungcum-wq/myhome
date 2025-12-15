@@ -3,43 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbird's Blog</title>
-    <!-- Google Fonts: Noto Sans KR (본문), Poppins (헤드라인) -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons (가벼운 아이콘 라이브러리) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>AirBird Blog - Smart Investment</title>
+    <meta name="description" content="AirBird의 투자 및 기술 블로그입니다.">
+    
+    <!-- Google Fonts: Inter (Modern & Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons: FontAwesome (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* * [STYLE.CSS] 
-         * 모든 스타일 코드는 여기에 작성되었습니다.
-         * 최신 CSS 변수(Variables)를 사용하여 다크모드/라이트모드를 관리합니다.
+        /* * ==========================================
+         * 1. CSS Variables & Reset (Theme Setup)
+         * ==========================================
          */
-
         :root {
-            /* 라이트 모드 (기본) */
-            --bg-color: #f8f9fa;
-            --text-color: #333333;
-            --primary-color: #3b82f6; /* Modern Blue */
-            --secondary-color: #64748b;
-            --card-bg: #ffffff;
-            --header-bg: rgba(255, 255, 255, 0.9);
+            /* Light Mode Colors */
+            --bg-body: #ffffff;
+            --bg-card: #f8f9fa;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent-color: #2563eb; /* Modern Blue */
+            --accent-hover: #1d4ed8;
             --border-color: #e5e7eb;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --transition-speed: 0.3s;
+            --header-height: 70px;
         }
 
         [data-theme="dark"] {
-            /* 다크 모드 변수 재정의 */
-            --bg-color: #111827;
-            --text-color: #f3f4f6;
-            --primary-color: #60a5fa;
-            --secondary-color: #9ca3af;
-            --card-bg: #1f2937;
-            --header-bg: rgba(17, 24, 39, 0.9);
-            --border-color: #374151;
+            /* Dark Mode Colors */
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
+            --accent-color: #60a5fa; /* Lighter Blue for Dark Mode */
+            --accent-hover: #3b82f6;
+            --border-color: #333333;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -48,693 +50,677 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
             line-height: 1.6;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
         a {
             text-decoration: none;
             color: inherit;
+            transition: color 0.2s ease;
         }
 
         ul {
             list-style: none;
         }
 
-        /* --- Header & Navigation --- */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: var(--header-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
         }
 
+        /* * ==========================================
+         * 2. Layout & Header
+         * ==========================================
+         */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 20px;
         }
 
-        .nav-wrapper {
+        header {
+            height: var(--header-height);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(var(--bg-body), 0.9); /* backdrop filter fallback */
+            background-color: var(--bg-body);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--accent-color);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
-        .nav-links {
+        .nav-menu {
             display: flex;
-            gap: 2rem;
+            gap: 30px;
         }
 
-        .nav-links a {
+        .nav-link {
             font-weight: 500;
-            transition: color 0.2s;
-            font-size: 0.95rem;
+            color: var(--text-muted);
+            position: relative;
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--primary-color);
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .theme-toggle {
-            cursor: pointer;
-            padding: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            padding: 5px;
             border-radius: 50%;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            transition: transform 0.3s;
         }
 
         .theme-toggle:hover {
-            background-color: var(--border-color);
+            transform: rotate(15deg);
         }
 
         .mobile-menu-btn {
             display: none;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: var(--text-color);
+            font-size: 1.5rem;
+            color: var(--text-main);
         }
 
-        /* --- Main Sections --- */
-        section {
-            padding: 5rem 0;
-            scroll-margin-top: 70px; /* 헤더 높이만큼 스크롤 보정 */
+        /* * ==========================================
+         * 3. Main Content Sections
+         * ==========================================
+         */
+        main {
+            padding: 40px 0 80px;
+            min-height: calc(100vh - var(--header-height) - 100px);
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary-color);
-            margin: 0.5rem auto 0;
-        }
-
-        /* --- Hero / Featured Post --- */
-        #home {
-            padding-top: 3rem;
-        }
-
-        .hero-card {
-            background-color: var(--card-bg);
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--border-color);
+        /* Hero / Featured Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .hero-image {
             width: 100%;
-            height: 300px;
+            height: 400px;
             object-fit: cover;
-            background-color: #ddd;
-        }
-
-        .hero-content {
-            padding: 2rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        /* 카드 내부의 작은 뱃지 (Sub Category) */
-        .card-badge {
-            display: inline-block;
-            padding: 0.15rem 0.5rem;
-            background-color: #eff6ff;
-            color: var(--primary-color);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-        
-        [data-theme="dark"] .card-badge {
-            background-color: rgba(59, 130, 246, 0.15);
-        }
-
-        .hero-title {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-desc {
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--text-color);
-            color: var(--bg-color);
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-
-        .btn:hover {
-            opacity: 0.8;
-        }
-
-        /* --- Grid Layout (Tech, Design, Portfolio) --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 0.75rem;
-            overflow: hidden;
+            border-radius: 12px;
             box-shadow: var(--shadow);
+            background-color: var(--border-color); /* Fallback */
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Grid System */
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Default 3 columns */
+            gap: 30px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        /* Post Card */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
             border: 1px solid var(--border-color);
             transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
             display: flex;
             flex-direction: column;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: var(--shadow);
         }
 
-        .card-image {
+        .card-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            background-color: #eee;
+            background-color: var(--border-color); /* Fallback */
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 20px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
 
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-date {
+        .card-tag {
             font-size: 0.8rem;
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
 
         .card-title {
             font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
-        .card-text {
+        .card-excerpt {
+            color: var(--text-muted);
             font-size: 0.95rem;
-            color: var(--secondary-color);
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
 
-        /* --- About Section --- */
-        .about-wrapper {
+        .card-footer {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 3rem;
-            background-color: var(--card-bg);
-            padding: 3rem;
-            border-radius: 1rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
         }
 
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--primary-color);
-            flex-shrink: 0;
+        /* * ==========================================
+         * 4. Footer
+         * ==========================================
+         */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: auto;
         }
 
-        .about-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         .social-links {
-            margin-top: 1.5rem;
             display: flex;
-            gap: 1rem;
+            gap: 15px;
+            margin-top: 15px;
         }
 
-        .social-icon {
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            transition: all 0.2s;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .social-icon:hover {
-            background-color: var(--primary-color);
+        .social-links a:hover {
+            background-color: var(--accent-color);
             color: white;
-            border-color: var(--primary-color);
         }
 
-        /* --- Footer --- */
-        footer {
-            background-color: var(--card-bg);
-            padding: 3rem 0;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .footer-nav {
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-nav a {
-            margin: 0 1rem;
-            color: var(--secondary-color);
+        .footer-nav ul li {
+            margin-bottom: 8px;
         }
         
         .footer-nav a:hover {
-            color: var(--primary-color);
+            text-decoration: underline;
         }
 
         .copyright {
-            font-size: 0.9rem;
-            color: var(--secondary-color);
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
         }
 
-        /* * [MEDIA QUERIES] 
-         * 반응형 브레이크포인트 설정
+        /* * ==========================================
+         * 5. Media Queries (Responsive)
+         * ==========================================
          */
+        
+        /* Tablet & Mobile Breakpoints */
+        @media (max-width: 992px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
 
-        /* 태블릿 (Tablet, 768px 이상) */
-        @media (min-width: 768px) {
-            .hero-card {
-                flex-direction: row;
-                height: 400px;
-            }
             .hero-image {
-                width: 50%;
-                height: 100%;
+                height: 300px;
             }
-            .hero-content {
-                width: 50%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
+
+            .post-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
             }
         }
 
-        /* 모바일 (Mobile, 768px 미만) */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* JS로 토글 */
-                position: absolute;
-                top: 100%;
+            .mobile-menu-btn {
+                display: block; /* Show hamburger */
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: var(--header-height);
                 left: 0;
                 width: 100%;
-                background-color: var(--card-bg);
+                background-color: var(--bg-body);
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                padding: 20px;
                 border-bottom: 1px solid var(--border-color);
+                transform: translateY(-150%); /* Hidden by default */
+                transition: transform 0.3s ease;
+                gap: 15px;
+                box-shadow: var(--shadow);
             }
 
-            .nav-links.active {
-                display: flex;
+            .nav-menu.active {
+                transform: translateY(0); /* Slide down */
             }
 
-            .nav-links li {
-                width: 100%;
-                text-align: center;
-                padding: 0.5rem 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .about-wrapper {
-                flex-direction: column;
-                text-align: center;
+            .nav-link.active::after {
+                display: none; /* Remove underline on mobile */
             }
             
-            .social-links {
-                justify-content: center;
+            .nav-link.active {
+                font-weight: 700;
             }
+
+            .post-grid {
+                grid-template-columns: 1fr; /* 1 column on mobile */
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- 헤더 섹션 -->
+    <!-- Header Section -->
     <header>
-        <div class="container nav-wrapper">
-            <a href="#home" class="logo">
-                <i data-lucide="feather"></i> Airbird
+        <div class="container" style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <a href="#" class="logo" onclick="app.router('home')">
+                <i class="fa-solid fa-paper-plane"></i> AirBird
             </a>
-            
-            <button class="mobile-menu-btn" aria-label="메뉴 열기">
-                <i data-lucide="menu"></i>
-            </button>
 
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#tech">Tech</a></li>
-                <li><a href="#design">Design</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
+            <!-- GNB Navigation -->
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="investment">Investment</a></li>
+                    <li><a href="#" class="nav-link" data-page="techniques">Techniques</a></li>
+                    <li><a href="#" class="nav-link" data-page="management">Management</a></li>
+                </ul>
+            </nav>
 
-            <button class="theme-toggle" aria-label="다크모드 토글">
-                <i data-lucide="moon"></i>
-            </button>
+            <div class="header-actions">
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        
-        <!-- 홈 (Featured Post) -->
-        <section id="home">
-            <div class="hero-card">
-                <!-- 변경된 이미지: 개발자/노트북 테마 -->
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Featured Post" class="hero-image">
-                <div class="hero-content">
-                    <span class="badge">Featured</span>
-                    <h2 class="hero-title">Airbird의 기술 블로그</h2>
-                    <p class="hero-desc">최신 웹 트렌드와 기술 경험을 공유하는 공간입니다. CSV 데이터를 기반으로 생성된 정적 웹페이지를 탐색해보세요.</p>
-                    <a href="#tech" class="btn">Start Exploring</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tech 섹션 -->
-        <section id="tech">
-            <h2 class="section-title">Technology</h2>
-            <div class="grid-container" id="tech-grid">
-                <!-- JS로 카드가 동적 생성됩니다 -->
-            </div>
-        </section>
-
-        <!-- Design 섹션 -->
-        <section id="design">
-            <h2 class="section-title">Design Ideas</h2>
-            <div class="grid-container" id="design-grid">
-                <!-- JS로 카드가 동적 생성됩니다 -->
-            </div>
-        </section>
-
-        <!-- Portfolio 섹션 (New!) -->
-        <section id="portfolio">
-            <h2 class="section-title">Portfolio</h2>
-            <div class="grid-container" id="portfolio-grid">
-                <!-- JS로 카드가 동적 생성됩니다 -->
-            </div>
-        </section>
-
-        <!-- About 섹션 -->
-        <section id="about">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-wrapper">
-                <!-- 이미지 로드 실패시 대체 이미지 표시 -->
-                <img src="image/portfolio.jpg" 
-                     onerror="this.src='https://via.placeholder.com/200?text=Airbird'" 
-                     alt="Airbird Profile" class="profile-img">
-                <div class="about-content">
-                    <h3>Hello, I'm Airbird</h3>
-                    <p>안녕하세요. 웹 기술과 디자인의 조화를 추구하는 프론트엔드 개발자 Airbird입니다. 최신 웹 트렌드를 연구하고 사용자 경험을 개선하는 것에 관심이 많습니다.</p>
-                    
-                    <div class="social-links">
-                        <a href="https://github.com/airbird" target="_blank" class="social-icon" aria-label="GitHub">
-                            <i data-lucide="github"></i>
-                        </a>
-                        <a href="mailto:seuyoungcum@gmail.com" class="social-icon" aria-label="Email">
-                            <i data-lucide="mail"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Twitter">
-                            <i data-lucide="twitter"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+    <!-- Main Content Area (Dynamic Injection) -->
+    <main class="container" id="app">
+        <!-- Content will be rendered here by JavaScript -->
     </main>
 
-    <!-- 푸터 섹션 -->
+    <!-- Footer Section -->
     <footer>
         <div class="container">
-            <nav class="footer-nav">
-                <a href="#home">Home</a>
-                <a href="#tech">Tech</a>
-                <a href="#design">Design</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="#about">About</a>
-            </nav>
-            <p class="copyright">© 2024 Airbird. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>AirBird Blog</h3>
+                    <p>스마트한 투자를 위한 지식 저장소</p>
+                    <div class="social-links">
+                        <a href="https://github.com/airbird" target="_blank" aria-label="Github"><i class="fa-brands fa-github"></i></a>
+                        <a href="mailto:seuyoungcum@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-nav">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#" onclick="app.router('investment')">Investment</a></li>
+                        <li><a href="#" onclick="app.router('techniques')">Techniques</a></li>
+                        <li><a href="#" onclick="app.router('management')">Management</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 AirBird. All rights reserved.
+            </div>
         </div>
     </footer>
 
     <script>
-        /* * [SCRIPT.JS]
-         * DOM 조작 및 데이터 렌더링 스크립트
+        /**
+         * ==========================================
+         * 1. Data Source (Modified with Relevant Images)
+         * ==========================================
+         * using loremflickr for keyword-based stable images
          */
+        const rawData = [
+            { 
+                item: 'investment', 
+                category: 'basic', 
+                title: '주식 기초', 
+                content: '주식이란?, 시장 구조, 코스피·코스닥', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/stock,market/all' 
+            },
+            { 
+                item: 'investment', 
+                category: 'stock account', 
+                title: '계좌·거래', 
+                content: '증권계좌 개설, 주문 방법, 수수료', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/smartphone,money/all'
+            },
+            { 
+                item: 'techniques', 
+                category: 'chart', 
+                title: '차트 분석', 
+                content: '캔들, 이동평균선, 거래량', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/trading,chart/all'
+            },
+            { 
+                item: 'techniques', 
+                category: 'financial', 
+                title: '재무제표', 
+                content: 'PER, PBR, ROE, 손익계산서', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/finance,document/all'
+            },
+            { 
+                item: 'techniques', 
+                category: 'analyze', 
+                title: '기업·산업 분석', 
+                content: '실적, 성장성, 산업 트렌드', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/meeting,business/all'
+            },
+            { 
+                item: 'management', 
+                category: 'strategy', 
+                title: '투자 전략', 
+                content: '단기·중기·장기, 분할매수', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/chess,strategy/all'
+            },
+            { 
+                item: 'management', 
+                category: 'management', 
+                title: '리스크 관리', 
+                content: '손절, 포트폴리오, 심리관리', 
+                date: '2025-12-14',
+                image: 'https://loremflickr.com/800/600/umbrella,rain/all'
+            }
+        ];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Lucide 아이콘 초기화
-            lucide.createIcons();
+        /**
+         * ==========================================
+         * 2. Application Logic (SPA Router & UI)
+         * ==========================================
+         */
+        const app = {
+            data: rawData,
+            currentPage: 'home',
 
-            // 1. item.csv 데이터 반영 (item: 메인 카테고리, category: 서브 태그)
-            // * 업데이트: 각 콘텐츠에 맞는 실제 이미지 URL 적용
-            const posts = [
-                // Design
-                { 
-                    item: 'design', 
-                    category: 'ui/ux', 
-                    title: '마이크로 인터렉션의 힘', 
-                    desc: '사용자 경험 향상 애니메이션', 
-                    date: '2025-12-01', 
-                    // 이미지 업데이트: UI/UX 마이크로 인터렉션을 시각적으로 표현
-                    img: 'https://images.unsplash.com/photo-1549490349-f6551b8c1995?auto=format&fit=crop&w=600&q=80' 
-                },
-                { 
-                    item: 'design', 
-                    category: 'system', 
-                    title: '디자인 시스템 구축 실패기', 
-                    desc: '토큰 네이밍 부터 배포 까지', 
-                    date: '2025-12-02', 
-                    img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80' // Color Palette/Design
-                },
-                
-                // Technology
-                { 
-                    item: 'technology', 
-                    category: 'backend', 
-                    title: 'Node.js 이벤트 루프 완벽 가이드', 
-                    desc: '싱글 스레드 환경 비동기 처리', 
-                    date: '2025-12-03', 
-                    // 이미지 업데이트: Node.js와 이벤트 루프 흐름도 시각화
-                    img: 'https://images.unsplash.com/photo-1582213197793-1628d0862070?auto=format&fit=crop&w=600&q=80' 
-                },
-                { 
-                    item: 'technology', 
-                    category: 'frontend', 
-                    title: 'React 19 컴파일러 도입기', 
-                    desc: '수동 메모이제이션의 종말?', 
-                    date: '2025-12-04', 
-                    img: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=600&q=80' // React Concept/Code
-                },
-                { 
-                    item: 'technology', 
-                    category: 'devops', 
-                    title: '서버리스 아키텍처 비용 최적화', 
-                    desc: 'AWS Lambda 비용 절감', 
-                    date: '2025-12-05', 
-                    img: 'https://images.unsplash.com/photo-1484662020986-75935d2ebc66?auto=format&fit=crop&w=600&q=80' // Server Room/Cloud
-                },
-                
-                // Portfolio (portpolio -> portfolio)
-                { 
-                    item: 'portpolio', 
-                    category: 'web', 
-                    title: '타로점 웹 앱', 
-                    desc: '웹 기반의 타로점 앱', 
-                    date: '2025-12-06', 
-                    // 이미지 업데이트: 타로 카드 스프레드(배열)
-                    img: 'https://images.unsplash.com/photo-1547826039-bfc37335d215?auto=format&fit=crop&w=600&q=80' 
-                },
-                { 
-                    item: 'portpolio', 
-                    category: 'python', 
-                    title: '테트리스 코드', 
-                    desc: '파이선 테트리스', 
-                    date: '2025-12-07', 
-                    img: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&w=600&q=80' // Arcade/Retro Game
-                }
-            ];
+            // Initialize Application
+            init: function() {
+                this.setupTheme();
+                this.setupEventListeners();
+                this.router('home');
+            },
 
-            // 2. 포스트 카드 렌더링 함수
-            const renderPosts = () => {
-                const techGrid = document.getElementById('tech-grid');
-                const designGrid = document.getElementById('design-grid');
-                const portfolioGrid = document.getElementById('portfolio-grid');
-                
-                // 기존 내용 비우기
-                techGrid.innerHTML = '';
-                designGrid.innerHTML = '';
-                portfolioGrid.innerHTML = '';
-
-
-                posts.forEach(post => {
-                    const cardHTML = `
-                        <article class="card">
-                            <img src="${post.img}" alt="${post.title}" class="card-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=${post.title}'">
-                            <div class="card-body">
-                                <div class="card-meta">
-                                    <span class="card-badge">${post.category.toUpperCase()}</span>
-                                    <span class="card-date"><i data-lucide="calendar" width="12" height="12"></i> ${post.date}</span>
-                                </div>
-                                <h3 class="card-title">${post.title}</h3>
-                                <p class="card-text">${post.desc}</p>
-                            </div>
-                        </article>
-                    `;
-
-                    // CSV의 item 컬럼을 기준으로 섹션 분배
-                    if (post.item === 'technology') {
-                        techGrid.innerHTML += cardHTML;
-                    } else if (post.item === 'design') {
-                        designGrid.innerHTML += cardHTML;
-                    } else if (post.item === 'portpolio') { // CSV 오타 대응 (portpolio)
-                        portfolioGrid.innerHTML += cardHTML;
-                    }
+            // Setup Event Listeners
+            setupEventListeners: function() {
+                // Nav Links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const page = e.target.getAttribute('data-page');
+                        this.router(page);
+                        
+                        // Close mobile menu if open
+                        document.getElementById('nav-menu').classList.remove('active');
+                    });
                 });
-                
-                // 동적 생성된 아이콘 다시 렌더링
-                lucide.createIcons();
-            };
 
-            renderPosts();
+                // Mobile Menu Toggle
+                document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                    document.getElementById('nav-menu').classList.toggle('active');
+                });
 
-            // 3. 다크 모드 토글 기능
-            const themeToggleBtn = document.querySelector('.theme-toggle');
-            const themeIcon = themeToggleBtn.querySelector('i');
-            
-            themeToggleBtn.addEventListener('click', () => {
-                const isDark = document.body.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                    document.body.removeAttribute('data-theme');
-                    themeIcon.setAttribute('data-lucide', 'moon');
+                // Theme Toggle
+                document.getElementById('theme-toggle').addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+            },
+
+            // Theme Management
+            setupTheme: function() {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                document.body.setAttribute('data-theme', savedTheme);
+                this.updateThemeIcon(savedTheme);
+            },
+
+            toggleTheme: function() {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                this.updateThemeIcon(newTheme);
+            },
+
+            updateThemeIcon: function(theme) {
+                const icon = document.querySelector('#theme-toggle i');
+                if (theme === 'dark') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
                 } else {
-                    document.body.setAttribute('data-theme', 'dark');
-                    themeIcon.setAttribute('data-lucide', 'sun');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
                 }
-                lucide.createIcons();
-            });
+            },
 
-            // 4. 모바일 메뉴 토글
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-
-            menuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-
-            // 메뉴 링크 클릭 시 모바일 메뉴 닫기
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // 5. 스크롤 스파이 (현재 섹션 하이라이트)
-            window.addEventListener('scroll', () => {
-                const sections = document.querySelectorAll('section');
-                const navLi = document.querySelectorAll('.nav-links a');
-                let current = '';
-
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (scrollY >= sectionTop - 120) { // 헤더 높이 여유값 조정
-                        current = section.getAttribute('id');
+            // SPA Router
+            router: function(page) {
+                this.currentPage = page;
+                const mainEl = document.getElementById('app');
+                
+                // Update Nav Active State
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('data-page') === page) {
+                        link.classList.add('active');
                     }
                 });
 
-                navLi.forEach(a => {
-                    a.classList.remove('active');
-                    if (a.getAttribute('href').includes(current)) {
-                        a.classList.add('active');
-                    }
-                });
-            });
+                // Render Content
+                if (page === 'home') {
+                    this.renderHome(mainEl);
+                } else {
+                    this.renderCategoryPage(mainEl, page);
+                }
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            },
+
+            // Render Functions
+            renderHome: function(container) {
+                // Featured Post (Using the first investment post as featured)
+                const featured = this.data[0];
+                const recentPosts = this.data.slice(1, 7); // Get next 6 posts
+
+                const html = `
+                    <section class="hero">
+                        <img src="${featured.image}" alt="Featured" class="hero-image" onerror="this.src='https://loremflickr.com/800/600/finance'">
+                        <div class="hero-content">
+                            <span style="color: var(--accent-color); font-weight: 700; text-transform: uppercase;">Featured Post</span>
+                            <h1>${featured.title}</h1>
+                            <p>${featured.content}</p>
+                            <a href="#" class="btn-primary">Read More</a>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="section-title">Latest Posts</h2>
+                        <div class="post-grid">
+                            ${recentPosts.map(post => this.createCard(post)).join('')}
+                        </div>
+                    </section>
+                `;
+                container.innerHTML = html;
+            },
+
+            renderCategoryPage: function(container, category) {
+                const filteredPosts = this.data.filter(post => post.item === category);
+                const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+
+                const html = `
+                    <section>
+                        <h2 class="section-title">${categoryTitle}</h2>
+                        ${filteredPosts.length > 0 
+                            ? `<div class="post-grid">${filteredPosts.map(post => this.createCard(post)).join('')}</div>`
+                            : '<p>No posts found in this category.</p>'
+                        }
+                    </section>
+                `;
+                container.innerHTML = html;
+            },
+
+            createCard: function(post) {
+                return `
+                    <article class="card">
+                        <img src="${post.image}" alt="${post.title}" class="card-img" onerror="this.src='https://loremflickr.com/800/600/finance'">
+                        <div class="card-body">
+                            <div class="card-tag">${post.category}</div>
+                            <h3 class="card-title">${post.title}</h3>
+                            <p class="card-excerpt">${post.content}</p>
+                            <div class="card-footer">
+                                <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
+                                <span>By AirBird</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }
+        };
+
+        // Start App when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
         });
     </script>
 </body>
