@@ -354,39 +354,52 @@
         }
         
         /* * ==========================================
-         * 6. Post Detail View Styles (NEW)
+         * 6. Post Detail View Styles (UPDATED)
          * ==========================================
          */
         .post-detail {
             animation: fadeIn 0.4s ease-out;
             max-width: 800px;
             margin: 0 auto;
+            position: relative; /* Context for absolute/sticky elements */
         }
 
+        /* Updated Back Button Style: Floating X Icon */
         .back-btn {
-            display: inline-flex;
+            position: sticky;
+            top: 90px; /* Header + spacing */
+            margin-left: auto; /* Push to right */
+            display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            margin-bottom: 30px;
-            background-color: var(--bg-card);
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent */
+            backdrop-filter: blur(8px); /* Blur effect for modern look */
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-main);
-            font-weight: 500;
-            transition: all 0.2s;
+            box-shadow: var(--shadow);
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            z-index: 900;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] .back-btn {
+            background-color: rgba(30, 30, 30, 0.85);
         }
 
         .back-btn:hover {
             background-color: var(--accent-color);
             color: white;
             border-color: var(--accent-color);
-            transform: translateX(-5px);
+            transform: rotate(90deg) scale(1.1); /* Rotate effect on hover */
         }
 
         .detail-header {
             text-align: center;
             margin-bottom: 40px;
+            margin-top: -20px; /* Adjust for the space taken by the button if needed */
         }
 
         .detail-category {
@@ -447,6 +460,13 @@
             }
             .detail-image {
                 height: 250px;
+            }
+            /* Adjust button position for mobile */
+            .back-btn {
+                top: 80px; 
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -742,7 +762,7 @@
                 container.innerHTML = html;
             },
 
-            // NEW: Render Detailed Post View
+            // NEW: Render Detailed Post View with Close Icon
             renderPostDetail: function(container, post) {
                 // Generates dummy long content based on the short summary
                 const dummyLongContent = `
@@ -761,8 +781,9 @@
 
                 const html = `
                     <div class="post-detail">
-                        <button class="back-btn" onclick="app.goBack()">
-                            <i class="fa-solid fa-arrow-left"></i> 목록으로 돌아가기 (Exit)
+                        <!-- Updated Exit Button: X Icon positioned at top right -->
+                        <button class="back-btn" onclick="app.goBack()" aria-label="Close">
+                            <i class="fa-solid fa-xmark"></i>
                         </button>
                         
                         <div class="detail-header">
