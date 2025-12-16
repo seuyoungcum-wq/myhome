@@ -353,86 +353,101 @@
             margin-bottom: 8px;
         }
         
-        .footer-nav a:hover {
-            text-decoration: underline;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-        }
-
         /* * ==========================================
-         * 5. Media Queries (Responsive)
+         * 6. Post Detail View Styles (NEW)
          * ==========================================
          */
-        
-        /* Tablet & Mobile Breakpoints */
-        @media (max-width: 992px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-image {
-                height: 300px;
-            }
-
-            .post-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
-            }
+        .post-detail {
+            animation: fadeIn 0.4s ease-out;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: translateX(-5px);
+        }
+
+        .detail-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .detail-category {
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .detail-meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .detail-content {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
+        .detail-content p {
+            margin-bottom: 20px;
+        }
+
+        .detail-highlight {
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--accent-color);
+            margin: 30px 0;
+            font-style: italic;
+        }
+
+        /* Responsive Detail View */
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block; /* Show hamburger */
+            .detail-title {
+                font-size: 2rem;
             }
-
-            .nav-menu {
-                position: fixed;
-                top: var(--header-height);
-                left: 0;
-                width: 100%;
-                background-color: var(--bg-body);
-                flex-direction: column;
-                padding: 20px;
-                border-bottom: 1px solid var(--border-color);
-                transform: translateY(-150%); /* Hidden by default */
-                transition: transform 0.3s ease;
-                gap: 15px;
-                box-shadow: var(--shadow);
+            .detail-image {
+                height: 250px;
             }
-
-            .nav-menu.active {
-                transform: translateY(0); /* Slide down */
-            }
-
-            .nav-link.active::after {
-                display: none; /* Remove underline on mobile */
-            }
-            
-            .nav-link.active {
-                font-weight: 700;
-            }
-
-            .post-grid {
-                grid-template-columns: 1fr; /* 1 column on mobile */
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -503,12 +518,12 @@
     <script>
         /**
          * ==========================================
-         * 1. Data Source (Modified with Relevant Images)
+         * 1. Data Source
          * ==========================================
-         * using loremflickr for keyword-based stable images
          */
         const rawData = [
             { 
+                id: 1,
                 item: 'investment', 
                 category: 'basic', 
                 title: '주식 기초', 
@@ -517,6 +532,7 @@
                 image: 'https://loremflickr.com/800/600/stock,market/all' 
             },
             { 
+                id: 2,
                 item: 'investment', 
                 category: 'stock account', 
                 title: '계좌·거래', 
@@ -525,6 +541,7 @@
                 image: 'https://loremflickr.com/800/600/smartphone,money/all'
             },
             { 
+                id: 3,
                 item: 'techniques', 
                 category: 'chart', 
                 title: '차트 분석', 
@@ -533,6 +550,7 @@
                 image: 'https://loremflickr.com/800/600/trading,chart/all'
             },
             { 
+                id: 4,
                 item: 'techniques', 
                 category: 'financial', 
                 title: '재무제표', 
@@ -541,6 +559,7 @@
                 image: 'https://loremflickr.com/800/600/finance,document/all'
             },
             { 
+                id: 5,
                 item: 'techniques', 
                 category: 'analyze', 
                 title: '기업·산업 분석', 
@@ -549,6 +568,7 @@
                 image: 'https://loremflickr.com/800/600/meeting,business/all'
             },
             { 
+                id: 6,
                 item: 'management', 
                 category: 'strategy', 
                 title: '투자 전략', 
@@ -557,6 +577,7 @@
                 image: 'https://loremflickr.com/800/600/chess,strategy/all'
             },
             { 
+                id: 7,
                 item: 'management', 
                 category: 'management', 
                 title: '리스크 관리', 
@@ -574,6 +595,7 @@
         const app = {
             data: rawData,
             currentPage: 'home',
+            previousPage: 'home', // To track where to go back
 
             // Initialize Application
             init: function() {
@@ -634,11 +656,17 @@
             },
 
             // SPA Router
-            router: function(page) {
+            router: function(page, params = null) {
+                // If moving to a new main page, save it as previous for 'back' functionality
+                // Exception: Don't update previousPage if we are going to 'detail'
+                if (page !== 'detail') {
+                    this.previousPage = page;
+                }
+
                 this.currentPage = page;
                 const mainEl = document.getElementById('app');
                 
-                // Update Nav Active State
+                // Update Nav Active State (only if it's a main nav page)
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.classList.remove('active');
                     if(link.getAttribute('data-page') === page) {
@@ -649,6 +677,8 @@
                 // Render Content
                 if (page === 'home') {
                     this.renderHome(mainEl);
+                } else if (page === 'detail') {
+                    this.renderPostDetail(mainEl, params);
                 } else {
                     this.renderCategoryPage(mainEl, page);
                 }
@@ -657,11 +687,23 @@
                 window.scrollTo(0, 0);
             },
 
+            // Go Back Logic
+            goBack: function() {
+                this.router(this.previousPage);
+            },
+
+            // View Post Handler
+            viewPost: function(id) {
+                const post = this.data.find(p => p.id === id);
+                if (post) {
+                    this.router('detail', post);
+                }
+            },
+
             // Render Functions
             renderHome: function(container) {
-                // Featured Post (Using the first investment post as featured)
                 const featured = this.data[0];
-                const recentPosts = this.data.slice(1, 7); // Get next 6 posts
+                const recentPosts = this.data.slice(1, 7);
 
                 const html = `
                     <section class="hero">
@@ -670,7 +712,7 @@
                             <span style="color: var(--accent-color); font-weight: 700; text-transform: uppercase;">Featured Post</span>
                             <h1>${featured.title}</h1>
                             <p>${featured.content}</p>
-                            <a href="#" class="btn-primary">Read More</a>
+                            <button onclick="app.viewPost(${featured.id})" class="btn-primary">Read More</button>
                         </div>
                     </section>
 
@@ -700,9 +742,51 @@
                 container.innerHTML = html;
             },
 
+            // NEW: Render Detailed Post View
+            renderPostDetail: function(container, post) {
+                // Generates dummy long content based on the short summary
+                const dummyLongContent = `
+                    <p class="detail-highlight">${post.content}에 대한 심층 분석입니다.</p>
+                    <p>본 포스트에서는 <strong>${post.title}</strong>의 핵심 개념과 실제 적용 사례를 자세히 다룹니다. 투자자로서 성공하기 위해서는 기초적인 지식뿐만 아니라 시장의 흐름을 읽는 통찰력이 필요합니다.</p>
+                    <p>최근 금융 시장의 트렌드를 살펴보면, ${post.category} 분야의 중요성이 더욱 부각되고 있습니다. 특히 변동성이 큰 장세에서는 원칙을 지키는 투자가 그 어느 때보다 중요합니다.</p>
+                    <h3>핵심 포인트</h3>
+                    <ul>
+                        <li>시장 분석의 기초와 응용</li>
+                        <li>리스크 관리의 중요성</li>
+                        <li>장기적인 관점에서의 자산 배분 전략</li>
+                    </ul>
+                    <p>결론적으로, 꾸준한 학습과 경험이 성공적인 투자의 지름길입니다. 추가적인 정보나 구체적인 데이터가 필요하시다면 언제든 문의해 주시기 바랍니다.</p>
+                    <p>감사합니다.</p>
+                `;
+
+                const html = `
+                    <div class="post-detail">
+                        <button class="back-btn" onclick="app.goBack()">
+                            <i class="fa-solid fa-arrow-left"></i> 목록으로 돌아가기 (Exit)
+                        </button>
+                        
+                        <div class="detail-header">
+                            <span class="detail-category">${post.category}</span>
+                            <h1 class="detail-title">${post.title}</h1>
+                            <div class="detail-meta">
+                                <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
+                                <span><i class="fa-regular fa-user"></i> AirBird</span>
+                            </div>
+                        </div>
+
+                        <img src="${post.image}" alt="${post.title}" class="detail-image" onerror="this.src='https://loremflickr.com/800/600/finance'">
+                        
+                        <div class="detail-content">
+                            ${dummyLongContent}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML = html;
+            },
+
             createCard: function(post) {
                 return `
-                    <article class="card">
+                    <article class="card" onclick="app.viewPost(${post.id})" style="cursor: pointer;">
                         <img src="${post.image}" alt="${post.title}" class="card-img" onerror="this.src='https://loremflickr.com/800/600/finance'">
                         <div class="card-body">
                             <div class="card-tag">${post.category}</div>
